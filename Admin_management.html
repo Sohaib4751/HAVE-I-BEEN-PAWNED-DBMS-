@@ -1,0 +1,309 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Management - Leak Peak</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Terminal+Grotesque:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Terminal Grotesque', sans-serif;
+            background-color: #000;
+            color: #ffffff;
+            background: url('https://gifs.cackhanded.net/lilo-and-stitch/laugh.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    body {
+        animation: fadeIn 1.5s ease-in-out;
+    }
+        .bg-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .bg-transparent-black {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .bg-dark-blue {
+            background-color: #152634;
+        }
+        .sci-fi-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .btn-effect {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-effect:hover {
+            transform: scale(1.05);
+            background-color: #1a3a5f;
+        }
+       
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        main {
+            flex-grow: 1;
+            margin-top: 100px; /* Adjust this based on header height */
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+    <header class="bg-dark-blue text-white p-4 bg-overlay">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold sci-fi-font">Leak Peak</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="main.html" class="hover:underline">Home</a></li>
+                    <li><a href="Admin_management.html" class="hover:underline">Admin Management</a></li>
+                    <li><a href="main.html" class="hover:underline">Logout</a></li>
+                    <li><a href="user_logs.html" class="hover:underline">User Logs</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 bg-overlay">
+        <section class="text-center">
+            <h2 class="text-3xl font-bold mb-4">Admin Management</h2>
+        </section>
+
+        <section class="mt-12">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold ml-4">Admins List</h3>
+                <button class="bg-dark-blue text-white p-2 rounded btn-effect" onclick="document.getElementById('addAdminModal').classList.remove('hidden')">Add Admin</button>
+            </div>
+            <div class="bg-transparent-black p-4 rounded shadow">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th class="p-2">Name</th>
+                            <th class="p-2">Email</th>
+                            <th class="p-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminList">
+                        <!-- Admin rows will be injected here via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark-blue text-white p-4 mt-12 bg-overlay">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Leak Peak. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Add Admin Modal -->
+    <div id="addAdminModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white text-black p-6 rounded shadow-lg w-1/3">
+            <h3 class="text-2xl font-bold mb-4">Add Admin</h3>
+            <form id="addAdminForm">
+                <div class="mb-4">
+                    <label for="adminName" class="block mb-2">Username</label>
+                    <input type="text" id="adminName" class="w-full p-2 border border-gray-300 rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="adminEmail" class="block mb-2">Email</label>
+                    <input type="email" id="adminEmail" class="w-full p-2 border border-gray-300 rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="adminPassword" class="block mb-2">Password</label>
+                    <input type="password" id="adminPassword" class="w-full p-2 border border-gray-300 rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="adminRole" class="block mb-2">Role</label>
+                    <input type="text" id="adminRole" class="w-full p-2 border border-gray-300 rounded" required>
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" class="bg-gray-500 text-white p-2 rounded mr-2" onclick="document.getElementById('addAdminModal').classList.add('hidden')">Cancel</button>
+                    <button type="submit" class="bg-dark-blue text-white p-2 rounded btn-effect">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Replace with your actual API URL
+        const apiUrl = 'http://localhost:3000/admins';
+        
+        // Fetch the list of admins from the API
+        async function fetchAdminData() {
+            try {
+                const token = localStorage.getItem('token');  // Retrieve token from localStorage
+                if (!token) {
+                    console.error('No token found!');
+                    return;
+                }
+    
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`  // Send the Bearer token
+                    },
+                    credentials: 'include'  // Include cookies if needed for session
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Error fetching admin data:', errorData.error);
+                    return;
+                }
+    
+                const adminData = await response.json();
+                console.log('Admin data:', adminData);
+    
+                // Call the function to display the admin data
+                displayAdmins(adminData);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    
+        // Function to display admins in the table
+        function displayAdmins(admins) {
+            const adminList = document.getElementById('adminList');
+            adminList.innerHTML = '';  // Clear existing rows
+    
+            if (admins.length === 0) {
+                adminList.innerHTML = '<tr><td colspan="3" class="text-center p-4">No admins found</td></tr>';
+            } else {
+                admins.forEach(admin => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="p-2">${admin.username}</td>
+                        <td class="p-2">${admin.email}</td>
+                        <td class="p-2">
+                            <button class="bg-dark-blue text-white p-2 rounded btn-effect" onclick="editAdmin('${admin.email}')">Edit</button>
+                            <button class="bg-red-600 text-white p-2 rounded btn-effect" onclick="deleteAdmin(${admin.admin_id})">Delete</button>
+                        </td>
+                    `;
+                    adminList.appendChild(row);
+                });
+            }
+        }
+    
+        // Handle adding a new admin
+        document.getElementById('addAdminForm').addEventListener('submit', async function(event) {
+            event.preventDefault();  // Prevent the form from reloading the page
+            
+            const name = document.getElementById('adminName').value;
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const role = document.getElementById('adminRole').value;
+    
+            const token = localStorage.getItem('token');  // Retrieve the token from localStorage
+    
+            if (!token) {
+                console.error('No token found!');
+                return;
+            }
+    
+            // URL for registering an admin
+            const registerUrl = 'http://localhost:3000/register-admins';  
+    
+            // Post the new admin data to the API
+            try {
+                const response = await fetch(registerUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`  // Send the Bearer token
+                    },
+                    body: JSON.stringify({
+                        username: name,
+                        email: email,
+                        password: password,
+                        role: role
+                    })
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Error adding admin:', errorData.error);
+                    alert('Failed to add admin');
+                    return;
+                }
+    
+                const result = await response.json();
+                console.log(result.message);  // Log the success message from the backend
+                alert('Admin added successfully!');
+    
+                // Optionally, close the modal or reset the form
+                document.getElementById('addAdminModal').classList.add('hidden');
+                document.getElementById('addAdminForm').reset();  // Reset the form fields
+    
+                // Refresh the admin list to show the new admin
+                fetchAdminData();  // This will refresh the admin list
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding admin');
+            }
+        });
+    
+        // Function to delete an admin
+        async function deleteAdmin(adminId) {
+            const token = localStorage.getItem('token');  // Retrieve the token from localStorage
+    
+            if (!token) {
+                console.error('No token found!');
+                return;
+            }
+    
+            // URL for deleting an admin
+            const deleteUrl = `http://localhost:3000/delete-admin/${adminId}`;
+            console.log("heeeellloo",adminId);
+            // Call the API to delete the admin
+            try {
+                const response = await fetch(deleteUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`  // Send the Bearer token
+                    }
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Error deleting admin:', errorData.error);
+                    alert('Failed to delete admin');
+                    return;
+                }
+    
+                const result = await response.json();
+                console.log(result.message);  // Log the success message from the backend
+                alert('Admin deleted successfully!');
+    
+                // Refresh the admin list after deletion
+                fetchAdminData();  // This will refresh the admin list
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting admin');
+            }
+        }
+    
+        // Initial load of admins
+        fetchAdminData();
+    </script>
+    
+</body>
+</html>

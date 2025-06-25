@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Logs - Leak Peak</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Terminal+Grotesque:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Terminal Grotesque', sans-serif;
+            background-color: #000;
+            color: #ffffff;
+            background: url('https://gifs.cackhanded.net/lilo-and-stitch/laugh.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        body {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .bg-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .bg-transparent-black {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .bg-dark-blue {
+            background-color: #152634;
+        }
+        .sci-fi-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .btn-effect {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-effect:hover {
+            transform: scale(1.05);
+            background-color: #1a3a5f;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        main {
+            flex-grow: 1;
+            margin-top: 100px; /* Adjust this based on header height */
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+    <header class="bg-dark-blue text-white p-4 bg-overlay">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold sci-fi-font">Leak Peak</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="main.html" class="hover:underline">Home</a></li>
+                    <li><a href="Admin_management.html" class="hover:underline">Admin Management</a></li>
+                    <li><a href="main.html" class="hover:underline">Logout</a></li>
+                    <li><a href="user_logs.html" class="hover:underline">User Logs</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 bg-overlay">
+        <section class="text-center">
+            <h2 class="text-3xl font-bold mb-4">User Logs</h2>
+            <p class="text-xl">This section displays the logs of the users.</p>
+        </section>
+
+        <section class="mt-12">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold ml-4">User Logs List</h3>
+            </div>
+            <div class="bg-transparent-black p-4 rounded shadow">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th class="p-2">Log ID</th>
+                            <th class="p-2">User ID</th>
+                            <th class="p-2">Action</th>
+                            <th class="p-2">Role</th>
+                            <th class="p-2">Action Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userLogsList">
+                        <!-- User log rows will be injected here via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark-blue text-white p-4 mt-12 bg-overlay">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Leak Peak. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Replace with your actual API URL
+        const apiUrl = 'http://localhost:3000/user-logs';
+
+        // Fetch the list of user logs from the API
+        async function fetchUserLogs() {
+            try {
+                const token = localStorage.getItem('token');  // Retrieve token from localStorage
+                if (!token) {
+                    console.error('No token found!');
+                    return;
+                }
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`  // Send the Bearer token
+                    },
+                    credentials: 'include'  // Include cookies if needed for session
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Error fetching user logs:', errorData.error);
+                    return;
+                }
+
+                const logsData = await response.json();
+                console.log('User logs data:', logsData);
+
+                // Call the function to display the user logs
+                displayUserLogs(logsData);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Function to display user logs in the table
+        function displayUserLogs(logs) {
+            const userLogsList = document.getElementById('userLogsList');
+            userLogsList.innerHTML = '';  // Clear existing rows
+
+            if (logs.length === 0) {
+                userLogsList.innerHTML = '<tr><td colspan="5" class="text-center p-4">No user logs found</td></tr>';
+            } else {
+                logs.forEach(log => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="p-2">${log.log_id}</td>
+                        <td class="p-2">${log.user_id}</td>
+                        <td class="p-2">${log.action}</td>
+                        <td class="p-2">${log.role}</td> <!-- Display Role -->
+                        <td class="p-2">${new Date(log.action_time).toLocaleString()}</td>
+                    `;
+                    userLogsList.appendChild(row);
+                });
+            }
+        }
+
+        // Initial load of user logs
+        fetchUserLogs();
+    </script>
+</body>
+</html>

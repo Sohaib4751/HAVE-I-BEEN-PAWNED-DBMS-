@@ -1,0 +1,134 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leak Peak - Lilo and Stitch Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Terminal+Grotesque:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Terminal Grotesque', sans-serif;
+            background: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmV1bmNwYWZhYW9na2x3aGo1N3AwZzd6OW01c3N5ZzU3cXg0NjVtYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OOezqqxPB8aJ2/giphy.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        body {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .bg-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .bg-transparent-black {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .bg-dark-blue {
+            background-color: #152634;
+        }
+        .sci-fi-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .btn-effect {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-effect:hover {
+            transform: scale(1.05);
+            background-color: #1a3a5f;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        main {
+            margin-top: 80px; /* Adjust this based on header height */
+            flex-grow: 1;
+        }
+        footer {
+            margin-top: auto; /* This pushes the footer to the bottom */
+        }
+
+        /* Typewriting effect styles */
+        .typewriter-wrapper {
+            display: inline-block;
+            overflow: hidden;
+            border-right: .15em solid orange; /* Cursor effect */
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .1em;
+            animation: typing 4s steps(30) 1s 1 normal both, blink 0.75s step-end infinite;
+            width: 100%;
+        }
+
+        /* Add spacing between paragraphs */
+        .typewriter-wrapper p {
+            margin-bottom: 20px; /* Add spacing between paragraphs */
+            margin: 0;
+            display: block;
+            white-space: pre-wrap; /* This ensures text will wrap when there is no space */
+            word-wrap: break-word;
+            padding-top: 50px;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+    <header class="bg-dark-blue text-white p-4 bg-overlay">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold sci-fi-font">Leak Peak</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="main.html" class="hover:underline">Home</a></li>
+                    <li><a href="about.html" class="hover:underline">About</a></li>
+                    <li><a href="login.html" class="hover:underline">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 bg-overlay">
+        <section class="text-center">
+            <h2 class="text-3xl font-bold mb-4">About Us</h2>
+            <div class="typewriter-wrapper">
+                <p>Welcome to Leak Peak! We help you stay secure by checking if your email has been part of any data breaches. Stay informed, stay safe!</p>
+                <p>At Leak Peak, we monitor known data breaches across the internet to alert you if your personal information has been exposed. By checking your email against our database, you can ensure your security and take action before any malicious actors gain access to your sensitive data. Our service is fast, reliable, and free, offering peace of mind in an increasingly digital world.</p>
+                <p>Whether you're an individual concerned about your privacy or a business owner wanting to protect your customers' data, Leak Peak has the tools you need to stay ahead of security threats. Join us in making the internet a safer place for everyone!</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark-blue text-white p-4 bg-overlay">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Leak Peak. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

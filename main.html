@@ -1,0 +1,417 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leak Peak - Lilo and Stitch Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Terminal+Grotesque:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Terminal Grotesque', sans-serif;
+            background: url('https://gifs.cackhanded.net/lilo-and-stitch/laugh.gif') no-repeat center center fixed;
+            background-size: cover;
+        }
+        @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    body {
+        animation: fadeIn 1.5s ease-in-out;
+    }
+        .bg-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .bg-transparent-black {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .bg-dark-blue {
+            background-color: #152634;
+        }
+        .sci-fi-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .btn-effect {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-effect:hover {
+            transform: scale(1.05);
+            background-color: #1a3a5f;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        main {
+            margin-top: 80px; /* Adjust this based on header height */
+        }
+    </style>
+    
+</head>
+<body class="text-gray-200">
+    <header class="bg-dark-blue text-white p-4 bg-overlay">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold sci-fi-font">Leak Peak</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="hover:underline">Home</a></li>
+                    <li><a href="#" class="hover:underline">About</a></li>
+                    <li><a href="login.html" class="hover:underline">Login</a></li>
+                    <li><a id="subscriptionBtn" class="bg-dark-blue text-white p-2 rounded btn-effect hidden">Subscription Plan</a></li>
+                </ul>
+            </nav>
+           
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 bg-overlay">
+        <section class="text-center">
+            <h2 class="text-3xl font-bold mb-4">Check if your email has been pwned</h2>
+            <p class="mb-6">Enter your email address below to see if it has been compromised in a data breach.</p>
+            <form id="emailForm" class="max-w-md mx-auto">
+                <input type="email" id="emailInput" placeholder="Enter your email" class="w-full p-2 border border-gray-300 rounded mb-4 text-black">
+                <button type="submit" class="w-full bg-dark-blue text-white p-2 rounded btn-effect">Check</button>
+            </form>
+            <section id="reportSection" class="mt-12"></section>
+        </section>
+        <section id="subscriptionSection" class="mt-12"></section>
+
+
+
+
+        <section class="mt-12">
+            <h3 class="text-2xl font-bold mb-4">Recent Breaches</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Facebook</h4>
+                    <p class="mb-2">509,458,528 Facebook accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/533-million-facebook-users-phone-numbers-leaked-on-hacker-forum/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Collection #1</h4>
+                    <p class="mb-2">772,904,991 Collection #1 accounts</p>
+                    <a href="https://www.troyhunt.com/the-773-million-record-collection-1-data-reach/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Verifications.io</h4>
+                    <p class="mb-2">763,117,241 Verifications.io accounts</p>
+                    <a href="https://www.wired.com/story/763-million-records-exposed-in-massive-data-breach/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Onliner Spambot</h4>
+                    <p class="mb-2">711,477,622 Onliner Spambot accounts</p>
+                    <a href="https://www.zdnet.com/article/security-researcher-finds-largest-spambot-database-ever-711-million-email-addresses/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Data Enrichment Exposure From PDL Customer</h4>
+                    <p class="mb-2">622,161,052 Data Enrichment Exposure From PDL Customer accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/622-million-emails-exposed-in-data-enrichment-firm-leak/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Exploit.In</h4>
+                    <p class="mb-2">593,427,119 Exploit.In accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/593-million-emails-passwords-leaked-by-exploitin-database/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">LinkedIn</h4>
+                    <p class="mb-2">500,000,000 LinkedIn accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/500-million-linkedin-users-data-scraped-posted-for-sale-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">MySpace</h4>
+                    <p class="mb-2">360,213,024 MySpace accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/360-million-myspace-accounts-leaked-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">NetEase</h4>
+                    <p class="mb-2">235,000,000 NetEase accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/235-million-net-ease-accounts-leaked-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Dubsmash</h4>
+                    <p class="mb-2">162,000,000 Dubsmash accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/162-million-dubsmash-accounts-leaked-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Adobe</h4>
+                    <p class="mb-2">153,000,000 Adobe accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/153-million-adobe-accounts-leaked-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Canva</h4>
+                    <p class="mb-2">137,000,000 Canva accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/137-million-canva-accounts-leaked-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">Apollo</h4>
+                    <p class="mb-2">126,000,000 Apollo accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/126-million-apollo-accounts-leaked-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+                <div class="bg-transparent-black p-4 rounded shadow">
+                    <h4 class="text-xl font-bold mb-2">MyFitnessPal</h4>
+                    <p class="mb-2">144,000,000 MyFitnessPal accounts</p>
+                    <a href="https://www.bleepingcomputer.com/news/security/144-million-myfitnesspal-accounts-leaked-online/" class="text-dark-blue hover:underline">Learn more</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark-blue text-white p-4 mt-12 bg-overlay">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Leak Peak. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const userCategory = localStorage.getItem('userCategory'); // "premium" or "basic"
+    
+            updateLoginState(isLoggedIn);
+            
+            if (isLoggedIn) {
+               document.getElementById('subscriptionBtn').classList.remove('hidden');
+                document.getElementById('subscriptionBtn').addEventListener('click', handleSubscriptionClick);
+               } else {
+                 document.getElementById('subscriptionBtn').classList.add('hidden');
+               }
+
+
+            // Form submission event for checking compromised account
+            document.getElementById('emailForm').addEventListener('submit', function(event) {
+                event.preventDefault();  // Prevent the default form submission
+    
+                const email = document.getElementById('emailInput').value;
+                const password = document.getElementById('passwordInput').value;  // You should have a password field in the form
+    
+                if (!email || !password) {
+                    alert('Please enter both email and password.');
+                    return;
+                }
+    
+                // Call the backend API for login
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email, password: password })
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.role) {
+                        // Store userCategory and login state in localStorage
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('userCategory', data.user_category); // Save user category
+                        updateLoginState(true); // Update the login state to logged in
+    
+                        alert('Login successful');
+                        window.location.reload(); // Optional: reload the page after login
+                    } else {
+                        alert('Invalid credentials');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Login error:', error);
+                    alert('There was an error logging in.');
+                });
+            });
+            
+            // Form submission event for compromised account check
+            document.getElementById('emailForm').addEventListener('submit', function(event) {
+                event.preventDefault();  // Prevent the default form submission
+    
+                const email = document.getElementById('emailInput').value;
+    
+                if (!email) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+    
+                // Call the backend API for checking compromised account
+                fetch(`http://localhost:3000/compromised-account?email=${encodeURIComponent(email)}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.breaches && data.breaches.length > 0) {
+                            // Show detailed report for premium users, simple for basic users
+                            if (isLoggedIn && userCategory === 'premium') {
+                                displayPremiumReport(data.breaches);
+                            } else {
+                                displayBreaches(data.breaches);
+                            }
+                        } else {
+                            const reportSection = document.getElementById('reportSection');
+                            reportSection.innerHTML = '<p>No breaches found for this email.</p>';
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching data:', error);
+                        document.getElementById('reportSection').innerHTML = '<p>There was an error checking the email.</p>';
+                    });
+
+                    
+            });
+        });
+        
+        // Function to handle Subscription Plan button click
+        function handleSubscriptionClick() {
+    const email = localStorage.getItem('email'); // Retrieve email from localStorage
+    const userId = localStorage.getItem('userId'); // Retrieve userId from localStorage
+
+    if (!email || !userId) {
+        alert('User is not logged in! Please log in first.');
+        return;
+    }
+
+    // Fetch subscription plan for the logged-in user
+    fetch(`http://localhost:3000/users/subscription-plan?email=${encodeURIComponent(email)}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => {
+        if (!response.ok) {
+            return response.json().then((data) => {
+                throw new Error(data.message || 'Error fetching subscription plan');
+            });
+        }
+        return response.json();
+    })
+    .then((data) => {
+        const subscriptionSection = document.getElementById('subscriptionSection');
+        
+        if (data.error) {
+            alert('Error fetching subscription plan: ' + data.error);
+            return;
+        } else if (data.message) {
+            alert(data.message); // Display the message in case of no subscription
+            return;
+        } else {
+            let subscriptionHtml = `
+                <h2>Your Subscription Plan</h2>
+                <p><strong>Plan Name:</strong> ${data.user_category}</p>
+            `;
+
+            // Now, fetch upcoming renewal information
+            return fetch(`http://localhost:3000/api/subscriptions/upcoming-renewals?email=${encodeURIComponent(email)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((data) => {
+                        throw new Error(data.error || 'Error fetching upcoming renewal information');
+                    });
+                }
+                return response.json();
+            })
+            .then((renewalData) => {
+                if (renewalData.error) {
+                    alert('Error fetching upcoming renewal information: ' + renewalData.error);
+                    return;
+                } else if (renewalData.length === 0) {
+                    subscriptionHtml += '<p>No upcoming renewals found.</p>';
+                } else {
+                    let userFound = false; // Flag to check if userId is found in renewal data
+
+                    subscriptionHtml += `<h3>Your Upcoming Subscription Renewals</h3><ul>`;
+                     const userId = parseInt(localStorage.getItem('userId'), 10);
+                    renewalData.forEach((sub) => {
+                        if (sub.user_id === userId) { // Check if userId is found in renewal data
+                            userFound = true;
+                            subscriptionHtml += `
+                                <li>
+                                    <strong>Plan Name:</strong> ${sub.plan_name} <br>
+                                    <strong>Next Renewal Date:</strong> ${sub.next_renewal_date} <br>
+                                </li>
+                            `;
+                        }
+                    });
+                    subscriptionHtml += `</ul>`;
+
+                    if (!userFound) {
+                        subscriptionHtml += '<p>No upcoming renewals for your user.</p>';
+                    }
+                }
+
+                // Update the DOM with the subscription and renewal information
+                subscriptionSection.innerHTML = subscriptionHtml;
+            });
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert(error.message || 'An error occurred while fetching your subscription and renewals.');
+    });
+}
+
+        // Function to display basic breach report (for non-premium users)
+        function displayBreaches(breaches) {
+            const reportSection = document.getElementById('reportSection');
+            reportSection.innerHTML = '<h2 class="text-2xl font-bold mb-4">Breach Report</h2>';
+    
+            breaches.forEach((breach) => {
+                const breachDiv = document.createElement('div');
+                breachDiv.classList.add('bg-transparent-black', 'p-4', 'rounded', 'shadow', 'mb-4');
+                breachDiv.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">YOUR DATA HAS BEEN LEAKED</h3>
+                `;
+                reportSection.appendChild(breachDiv);
+            });
+        }
+    
+        // Function to display detailed breach report (for premium users)
+        function displayPremiumReport(breaches) {
+            const reportSection = document.getElementById('reportSection');
+            reportSection.innerHTML = '<h2 class="text-2xl font-bold mb-4">Detailed Breach Report</h2>';
+    
+            breaches.forEach((breach) => {
+                const breachDiv = document.createElement('div');
+                breachDiv.classList.add('bg-transparent-black', 'p-4', 'rounded', 'shadow', 'mb-4');
+                breachDiv.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">${breach.breach_name}</h3>
+                    <p><strong>Date:</strong> ${breach.breach_date}</p>
+                    <p><strong>Description:</strong> ${breach.breach_description}</p>
+                    <p><strong>Type:</strong> ${breach.breach_type}</p>
+                    <p><strong>Source:</strong> ${breach.breach_source}</p>
+                    <p><strong>Occurrences:</strong> ${breach.breach_count}</p>
+                    <p><strong>Password Hash:</strong> ${breach.password_hash}</p>
+                `;
+                reportSection.appendChild(breachDiv);
+            });
+        }
+    
+        // Update login state based on user login status
+        function updateLoginState(isLoggedIn) {
+            const loginButton = document.querySelector('nav ul li a[href="login.html"]');
+    
+            if (isLoggedIn) {
+                loginButton.textContent = 'Logout';
+                loginButton.href = '#';
+                loginButton.addEventListener('click', () => {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userCategory');
+                    window.location.reload();
+                });
+            } else {
+                loginButton.textContent = 'Login';
+                loginButton.href = 'login.html';
+            }
+        }
+
+
+    </script>
+    
+    
+</body>
+</html>

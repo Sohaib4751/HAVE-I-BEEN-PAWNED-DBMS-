@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leak Peak - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Terminal+Grotesque:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            background-color: #000;
+            color: #ffffff;
+            font-family: 'Terminal Grotesque', sans-serif;
+            background: url('https://gifs.cackhanded.net/lilo-and-stitch/laugh.gif') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding-top: 55px;
+        }
+        .bg-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .bg-transparent-black {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .bg-dark-blue {
+            background-color: #152634;
+        }
+        .sci-fi-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .btn-effect {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-effect:hover {
+            transform: scale(1.05);
+            background-color: #1a3a5f;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+    <header class="bg-dark-blue text-white p-4 bg-overlay">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold sci-fi-font">Leak Peak</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="main.html" class="hover:underline">Home</a></li>
+                    <li><a href="about.html" class="hover:underline">About</a></li>
+                    <li><a href="login.html" class="hover:underline">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 bg-overlay">
+        <section class="max-w-md mx-auto bg-transparent-black p-6 rounded shadow">
+            <h2 class="text-3xl font-bold mb-4 text-center">Register</h2>
+            <form id="registrationForm">
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" class="w-full p-2 border border-gray-300 rounded text-black">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" class="w-full p-2 border border-gray-300 rounded text-black">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" class="w-full p-2 border border-gray-300 rounded text-black">
+                </div>
+                <div class="mb-4">
+                    <label for="subscription" class="block text-sm font-medium mb-2">Subscription Plan</label>
+                    <select id="subscription" class="w-full p-2 border border-gray-300 rounded text-black">
+                        <option value="regular">Regular</option>
+                        <option value="premium">Premium</option>
+                    </select>
+                </div>
+                <div id="premiumDetails" class="hidden">
+                    <div class="mb-4">
+                        <label for="cardNumber" class="block text-sm font-medium mb-2">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="Enter your card number" class="w-full p-2 border border-gray-300 rounded text-black">
+                    </div>
+                    <div class="mb-4">
+                        <label for="expiryDate" class="block text-sm font-medium mb-2">Expiry Date</label>
+                        <input type="text" id="expiryDate" placeholder="MM/YY" class="w-full p-2 border border-gray-300 rounded text-black">
+                    </div>
+                    <div class="mb-4">
+                        <label for="country" class="block text-sm font-medium mb-2">Country</label>
+                        <select
+                            id="country_name"
+                            name="country"
+                            class="w-full p-2 border border-gray-300 rounded text-black"
+                        >
+                            <option value="" disabled selected>Select your country</option>
+                            <!-- Dynamically injected options will go here -->
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-dark-blue text-white p-2 rounded btn-effect">Register</button>
+            </form>
+            <p class="mt-4 text-center">
+                Already have an account? <a href="login.html" class="text-dark-blue hover:underline">Login</a>
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-dark-blue text-white p-4 mt-12 bg-overlay">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Leak Peak. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('subscription').addEventListener('change', function() {
+            const premiumDetails = document.getElementById('premiumDetails');
+            const countrySelect = document.getElementById('country_name');
+            
+            if (this.value === 'premium') {
+                premiumDetails.classList.remove('hidden');
+                countrySelect.required = true;  // Make country required for premium users
+            } else {
+                premiumDetails.classList.add('hidden');
+                countrySelect.required = false; // Make country not required for regular users
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/countries');
+                if (!response.ok) throw new Error('Failed to fetch countries');
+                const countries = await response.json();
+                const countrySelect = document.getElementById('country_name');
+
+                countrySelect.innerHTML = '<option value="" disabled selected>Select your country</option>';
+                countries.forEach(({ country_name }) => {
+                    const option = document.createElement('option');
+                    option.value = country_name;
+                    option.textContent = country_name;
+                    countrySelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching countries:', error);
+            }
+        });
+
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userCategory = document.getElementById('subscription').value;
+            const country = document.getElementById('country_name').value;
+
+            // Check if country is required and not selected for premium users
+            if (userCategory === 'premium' && !country) {
+                alert('Please select a country.');
+                return;
+            }
+
+            const formData = {
+                email: document.getElementById('email').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                user_category: userCategory,
+                country: country,
+            };
+
+            if (userCategory === 'premium') {
+                // Add credit card details only if the user selects "Premium"
+                formData.cardNumber = document.getElementById('cardNumber').value;
+                formData.expiryDate = document.getElementById('expiryDate').value;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/register-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Registration successful!');
+                    window.location.href = 'login.html';
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Error during registration:', error);
+                alert('An error occurred during registration.');
+            }
+        });
+    </script>
+</body>
+</html>
